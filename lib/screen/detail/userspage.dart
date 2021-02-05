@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_db_test/data/model/model_users.dart';
 import 'package:flutter_db_test/data/provider/provider_users.dart';
+import 'package:flutter_db_test/widget/list_tile_users.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -44,7 +45,8 @@ class _UserPageState extends State<UserPage> {
   ListView _usersListView(data){
     return ListView.builder(
       itemCount: data.length,
-      itemBuilder: (context, index) => ListTileUsers(users: listUsers[index])     
+      itemBuilder: (context, index) => ListTileUsers(users: userList[index])   
+      
     );
   }
 
@@ -57,24 +59,30 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget _buildUserPageBody(){
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20 / 2),
-      margin: EdgeInsets.all(10),
-      child: Consumer<ProviderUsers>(
-        builder: (ctx, category, child){
-          
+    // return Container(
+    //   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20 / 2),
+    //   margin: EdgeInsets.all(10),
+    //   child: _usersListView()
+    // );
+    return Center(
+      child: FutureBuilder<List<UserModel>>(
+        future: _fetchUsers(),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            List<UserModel> userData = snapshot.data;
+            return _usersListView(userData);
+          } else if(snapshot.hasError){
+            return Text("${snapshot.error}");
+          }
+          return CircularProgressIndicator();
         }
+        // future: this.fetch(),
+        // builder: (context, snap){
+        //   if(!snap.hasData) return CircularProgressIndicator();
+        //   return Text(snap.data.toString());
+        // }
       )
     );
-    // return Center(
-    //   child: FutureBuilder(
-        // future: this.fetch(),
-    //     builder: (context, snap){
-    //       if(!snap.hasData) return CircularProgressIndicator();
-    //       return Text(snap.data.toString());
-    //     }
-    //   )
-    // );
   }
 
   @override
