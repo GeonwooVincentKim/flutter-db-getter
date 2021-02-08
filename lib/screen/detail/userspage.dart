@@ -26,7 +26,7 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   List<UserModel> userList = [];
   // Widget initState() { super.initState(); }
-  // Future fetch() async{
+  // Future fetch() async{ 
   //   var res = await http.get("http://192.168.88.204:3010/users");
   //   return json.decode(res.body);
   // }
@@ -70,7 +70,12 @@ class _UserPageState extends State<UserPage> {
         builder: (context, snapshot){
           if(snapshot.hasData){
             List<UserModel> userData = snapshot.data;
-            return _usersListView(userData);
+            return ListView.builder(
+              itemCount: userData.length,
+              itemBuilder: (context, index) => ListTileUsers(users: userList[index])   
+              
+            );
+            // return _usersListView(userData);
           } else if(snapshot.hasError){
             return Text("${snapshot.error}");
           }
