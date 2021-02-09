@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_db_test/data/model/model_users.dart';
 import 'package:flutter_db_test/data/provider/provider_users.dart';
+import 'package:flutter_db_test/shared/style/divider.dart';
 import 'package:flutter_db_test/widget/list_tile_users.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -24,31 +25,52 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  List<UserModel> userList = [];
+  // List<UserModel> userList = [];
   // Widget initState() { super.initState(); }
-  // Future fetch() async{ 
-  //   var res = await http.get("http://192.168.88.204:3010/users");
-  //   return json.decode(res.body);
-  // }
-  Future<List<UserModel>> _fetchUsers() async {
-    final userListAPIurl = 'http://192.168.88.204:3010/users';
-    final response = await http.get(userListAPIurl);
-
-    if(response.statusCode == 200){
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((user) => new UserModel.fromJson(user)).toList();
-    } else {
-      throw Exception("Failed to load users from API");
-    }
-  }
-
-  ListView _usersListView(data){
-    return ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) => ListTileUsers(users: userList[index])   
-      
+  Future fetch() async{ 
+    // var res = await http.get("http://192.168.88.204:3010/api/users");
+    var res = await http.get(
+      "http://192.168.88.204:3010/api/users"
     );
+    return json.decode(res.body);
   }
+  List usersData;
+  Map data;
+
+  getUsers() async {
+    // http.Response response = await http.get("http://localhost:3010/api/users");
+    http.Response response = await http.get("http://192.168.88.204:3010/api/users");
+    debugPrint(response.body);
+    data = json.decode(response.body);
+    setState(() {
+      usersData = data['key'];
+    });
+  }
+
+  @override
+  initState(){
+    super.initState();
+    getUsers();
+  }
+  // Future<List<UserModel>> _fetchUsers() async {
+  //   final userListAPIurl = 'http://192.168.88.204:3010/users';
+  //   final response = await http.get(userListAPIurl);
+
+  //   if(response.statusCode == 200){
+  //     List jsonResponse = json.decode(response.body);
+  //     return jsonResponse.map((user) => new UserModel.fromJson(user)).toList();
+  //   } else {
+  //     throw Exception("Failed to load users from API");
+  //   }
+  // }
+
+  // ListView _usersListView(data){
+  //   return ListView.builder(
+  //     itemCount: data.length,
+  //     itemBuilder: (context, index) => ListTileUsers(users: userList[index])   
+      
+  //   );
+  // }
 
   Widget _buildUserPageAppBar(){
     return AppBar(
@@ -59,35 +81,76 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget _buildUserPageBody(){
+    return Container(
+      // child: FutureBuilder(
+      //   future: this.fetch(),
+      //   builder: (BuildContext context, snap){
+      //     if(!snap.hasData) return CircularProgressIndicator();
+      //     return Text(snap.data.toString());
+      //   }
+      // )
+      child: ListView.builder(
+        itemCount: usersData == null ? 0 : usersData.length,
+        itemBuilder: (BuildContext context, int index){
+          return Card(
+            child: Column(
+              children: <Widget>[
+                Text("${usersData[index]["ID"]}"),
+                Text("${usersData[index]["USER_NAME"]}"),
+                Text("${usersData[index]["EMAIL"]}"),
+                Text("${usersData[index]["IMAGE_URL"]}")
+              ]
+            )
+            // child: Row(
+            //   children: <Widget>[
+            //     // Text("${usersData[index]["_id"]}");
+                
+            //     Column(
+            //       children: <Widget>[
+            //       ]
+            //     ),
+            //     CustomDivider(color: null, height: 20),
+                  
+            //     // Column(
+            //       // children: <Widget>[
+            //       // ]
+            //     // )
+            //   ]
+            // ),
+          );
+        }
+        // itemBuilder: (context, index) => ListTileUsers(users: usersData[index])
+      )
+    );
     // return Container(
     //   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20 / 2),
     //   margin: EdgeInsets.all(10),
     //   child: _usersListView()
     // );
-    return Center(
-      child: FutureBuilder<List<UserModel>>(
-        future: _fetchUsers(),
-        builder: (context, snapshot){
-          if(snapshot.hasData){
-            List<UserModel> userData = snapshot.data;
-            return ListView.builder(
-              itemCount: userData.length,
-              itemBuilder: (context, index) => ListTileUsers(users: userList[index])   
+    // return Center(
+    //   child: FutureBuilder<List<UserModel>>(
+    //     future: _fetchUsers(),
+    //     builder: (context, snapshot){
+    //       if(snapshot.hasData){
+    //         List<UserModel> userData = snapshot.data;
+    //         return ListView.builder(
+    //           itemCount: userData.length,
+    //           itemBuilder: (context, index) => ListTileUsers(users: userList[index])   
               
-            );
-            // return _usersListView(userData);
-          } else if(snapshot.hasError){
-            return Text("${snapshot.error}");
-          }
-          return CircularProgressIndicator();
-        }
+    //         );
+    //         // return _usersListView(userData);
+    //       } else if(snapshot.hasError){
+    //         return Text("${snapshot.error}");
+    //       }
+    //       return CircularProgressIndicator();
+    //     }
         // future: this.fetch(),
         // builder: (context, snap){
         //   if(!snap.hasData) return CircularProgressIndicator();
         //   return Text(snap.data.toString());
         // }
-      )
-    );
+    //   )
+    // );
   }
 
   @override
