@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_db_test/data/provider/provider_users.dart';
 import 'package:flutter_db_test/screen/body.dart';
 import 'package:flutter_db_test/screen/not_found.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,11 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ProviderUsers()),
+      ],
+      child: MaterialApp(
         routes: {
             // "/": (context) => MyApp(),
             "/": (context) => Body(),
@@ -28,6 +33,7 @@ class MyApp extends StatelessWidget {
               builder: (BuildContext context) => NotFound(),
             );
         },
+      )
     );
     // return MultiProvider(
     //   providers: [

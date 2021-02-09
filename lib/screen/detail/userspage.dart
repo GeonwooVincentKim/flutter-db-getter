@@ -37,7 +37,7 @@ class _UserPageState extends State<UserPage> {
     return json.decode(res.body);
   }
   List usersData;
-  Map data;
+  Map<String, dynamic> data;
   UserModel userTest;
 
   getUsers() async {
@@ -96,7 +96,7 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  Widget _buildUserPageBody(){
+  Widget _buildUserPageBody(BuildContext context){
     return Container(
       // child: FutureBuilder(
       //   future: this.fetch(),
@@ -104,6 +104,20 @@ class _UserPageState extends State<UserPage> {
       //     if(!snap.hasData) return CircularProgressIndicator();
       //     return Text(snap.data['key'].toString());
       //   }
+      // )
+      // child: Consumer<ProviderUsers>(
+      //   builder: (ctx, users, child){
+      //     final List<UserModel> listUser = users.getAllUser.selectedUser;
+      //   }
+      // )
+      // child: FutureBuilder(
+      //   future: getUsers(),
+      //   builder: (context, snapshot){
+      //     return ChangeNotifierProvider(
+
+      //     );
+      //   }
+
       // )
       child: ListView.builder(
         itemCount: usersData == null ? 0 : usersData.length,
@@ -174,7 +188,7 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildUserPageAppBar(),
-      body: _buildUserPageBody(),
+      body: _buildUserPageBody(context),
     );
   }
 }
