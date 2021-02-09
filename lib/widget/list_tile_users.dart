@@ -14,23 +14,23 @@ class ListTileUsers extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TextDesign(
-            basicText: users.user_name,
+            basicText: users.USER_NAME,
             textStyle: TextStyle(fontSize: 9, color: Colors.black)
           ),
           // debugPrint("Test"),
           Divider(height: 5, color: Colors.transparent),
           TextDesign(
-            basicText: users.email,
+            basicText: users.EMAIL,
             textStyle: TextStyle(fontSize: 9, color: Colors.black)
           ),
           Divider(height: 5, color: Colors.transparent),
           TextDesign(
-            basicText: users.image_url,
+            basicText: users.IMAGE_URL,
             textStyle: TextStyle(fontSize: 9, color: Colors.black)
           ),
           Divider(height: 5, color: Colors.transparent),
           TextDesign(
-            basicText: users.address,
+            basicText: users.ADDRESS,
             textStyle: TextStyle(fontSize: 9, color: Colors.black)
           ),
           Divider(height: 5, color: Colors.transparent),

@@ -9,7 +9,8 @@ class ProviderUsers with ChangeNotifier{
     return [...userList];
   }
 
-  UserModel get selectedUser {
-    return _selectedUser != null ? UserModel.fromMap(_selectedUser) : null;
-  }
+  // UserModel get selectedUser {
+    // return _selectedUser != null ? UserModel.fromMap(_selectedUser) : null;
+  // }
+  List<UserModel> get selectedUser => [...userList];
 }

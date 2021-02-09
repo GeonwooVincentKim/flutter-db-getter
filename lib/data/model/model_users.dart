@@ -1,47 +1,47 @@
 import 'package:flutter/material.dart';
 
 class UserModel{
-  final int id;
-  final String user_name;
-  final String email;
-  final String image_url;
-  final String address;
+  final int ID;
+  final String USER_NAME;
+  final String EMAIL;
+  final String IMAGE_URL;
+  final String ADDRESS;
 
   UserModel({
-    @required this.id,
-    @required this.user_name,
-    @required this.email,
-    @required this.image_url,
-    @required this.address
+    @required this.ID,
+    @required this.USER_NAME,
+    @required this.EMAIL,
+    @required this.IMAGE_URL,
+    @required this.ADDRESS
   });
 
   factory UserModel.fromMap(UserModel user){
     return UserModel(
-      id: user.id ?? '',
-      user_name: user.user_name ?? '',
-      email: user.email ?? '',
-      image_url: user.image_url ?? '',
-      address: user.address ?? ''
+      ID: user.ID ?? '',
+      USER_NAME: user.USER_NAME ?? '',
+      EMAIL: user.EMAIL ?? '',
+      IMAGE_URL: user.IMAGE_URL ?? '',
+      ADDRESS: user.ADDRESS ?? ''
     );
   }
 
   factory UserModel.fromJson(Map<String, dynamic> json){
     return UserModel(
-      id: json['ID'],
-      user_name: json['USER_NAME'],
-      email: json['EMAIL'],
-      image_url: json['IMAGE_URL'],
-      address: json['ADDRESS']
+      ID: json['ID'],
+      USER_NAME: json['USER_NAME'],
+      EMAIL: json['EMAIL'],
+      IMAGE_URL: json['IMAGE_URL'],
+      ADDRESS: json['ADDRESS']
     );
   }
 
   factory UserModel.initUser(){
     return UserModel(
-      id: 0,
-      user_name: '',
-      email: '',
-      image_url: '',
-      address: ''
+      ID: 0,
+      USER_NAME: '',
+      EMAIL: '',
+      IMAGE_URL: '',
+      ADDRESS: ''
     );
   }
 }

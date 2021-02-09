@@ -26,6 +26,8 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   // List<UserModel> userList = [];
+  // List<UserModel> usersData = [];
+
   // Widget initState() { super.initState(); }
   Future fetch() async{ 
     // var res = await http.get("http://192.168.88.204:3010/api/users");
@@ -36,10 +38,23 @@ class _UserPageState extends State<UserPage> {
   }
   List usersData;
   Map data;
+  UserModel userTest;
 
   getUsers() async {
     // http.Response response = await http.get("http://localhost:3010/api/users");
     http.Response response = await http.get("http://192.168.88.204:3010/api/users");
+    debugPrint(response.body);
+    data = json.decode(response.body);
+    // userTest = UserModel.fromJson(json.decode(response.body));
+    // UserModel.fromJson(json.decode(response.body));
+    setState(() {
+      // usersData = data['key'];
+      usersData = data['key'];
+    });
+  }
+
+  getUsersByID() async {
+    http.Response response = await http.get("http://192.168.88.204:3010/api/users/:id");
     debugPrint(response.body);
     data = json.decode(response.body);
     setState(() {
@@ -51,6 +66,7 @@ class _UserPageState extends State<UserPage> {
   initState(){
     super.initState();
     getUsers();
+    // getUsersByID();
   }
   // Future<List<UserModel>> _fetchUsers() async {
   //   final userListAPIurl = 'http://192.168.88.204:3010/users';
@@ -86,7 +102,7 @@ class _UserPageState extends State<UserPage> {
       //   future: this.fetch(),
       //   builder: (BuildContext context, snap){
       //     if(!snap.hasData) return CircularProgressIndicator();
-      //     return Text(snap.data.toString());
+      //     return Text(snap.data['key'].toString());
       //   }
       // )
       child: ListView.builder(
@@ -95,10 +111,11 @@ class _UserPageState extends State<UserPage> {
           return Card(
             child: Column(
               children: <Widget>[
-                Text("${usersData[index]["ID"]}"),
-                Text("${usersData[index]["USER_NAME"]}"),
-                Text("${usersData[index]["EMAIL"]}"),
-                Text("${usersData[index]["IMAGE_URL"]}")
+                Text("${usersData[index]}"),
+                // Text("${usersData[index]["ID"]),
+                // Text("${usersData[index]["USER_NAME"]}"),
+                // Text("${usersData[index]["EMAIL"]}"),
+                // Text("${usersData[index]["IMAGE_URL"]}")
               ]
             )
             // child: Row(
