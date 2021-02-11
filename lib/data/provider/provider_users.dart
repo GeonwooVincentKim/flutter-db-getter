@@ -5,6 +5,7 @@ import 'package:flutter_db_test/data/model/model_users.dart';
 import 'package:http/http.dart' as http;
 
 class ProviderUsers with ChangeNotifier{
+  // List<UserModel> _userList = [];
   List<UserModel> _userList = [];
   UserModel _selectedUser;
   Map<String, dynamic> data;
@@ -21,7 +22,14 @@ class ProviderUsers with ChangeNotifier{
   Future<List<UserModel>> getAllUser(BuildContext conetxt) async {
     http.Response res = await http.get("http://192.168.88.204:3010/api/users");
     Map<String, dynamic> data = json.decode(res.body);
-    List<UserModel> _userList = data['key'];
+    _userList = data['key'];
+    return _userList;
+  }
+
+  Future<UserModel> fetchUser(BuildContext context) async {
+    http.Response res = await http.get("http://192.168.88.204:3010/api/users/:id");
+    return UserModel.fromJson(jsonDecode(res.body));
+    // data = UserModel.fromJson(jsonDecode(res.body));
   }
   // getUsers(BuildContext context) async{
   //   http.Response res = await http.get("http://192.168.88.204:3010/api/users");

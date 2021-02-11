@@ -4,6 +4,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+Future<List<Album>> getAllList() async{
+  final response = 
+    await http.get(Uri.https('jsonplaceholder.typicode.com', 'albums/'));
+  // return Album.fromJson(jsonDecode(response.body));
+  return json.decode(response.body);
+}
+
 Future<Album> fetchAlbum() async {
   final response =
       await http.get(Uri.https('jsonplaceholder.typicode.com', 'albums/1'));

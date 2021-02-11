@@ -17,7 +17,7 @@ class App extends StatelessWidget {
           title: Text('Job Portal'),
         ),
         body: Center(
-          child: JobsListView()
+          child: JobListView()
         ),
       ),
     );
