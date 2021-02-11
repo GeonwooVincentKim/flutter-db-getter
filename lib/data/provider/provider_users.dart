@@ -19,12 +19,12 @@ class ProviderUsers with ChangeNotifier{
   //   // List usersData = await http.get("http://192.168.88.204:3010/api/users");
   // }
 
-  Future<List<UserModel>> getAllUser(BuildContext conetxt) async {
-    http.Response res = await http.get("http://192.168.88.204:3010/api/users");
-    Map<String, dynamic> data = json.decode(res.body);
-    _userList = data['key'];
-    return _userList;
-  }
+  // Future<List<UserModel>> getAllUser(BuildContext conetxt) async {
+  //   http.Response res = await http.get("http://192.168.88.204:3010/api/users");
+  //   Map<String, dynamic> data = json.decode(res.body);
+  //   _userList = data['key'];
+  //   return _userList;
+  // }
 
   Future<List<UserModel>> getAllUser() async {
     final response = await http.get("http://192.168.88.204:3010/api/users");
