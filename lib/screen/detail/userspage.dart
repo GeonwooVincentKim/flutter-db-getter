@@ -28,6 +28,11 @@ class _UserPageState extends State<UserPage> {
   // List<UserModel> userList = [];
   // List<UserModel> usersData = [];
   Future<UserModel> futureUsers;
+  
+
+  List<UserModel> parseUsers(String responseBody){
+    
+  }
 
   // Widget initState() { super.initState(); }
   Future fetch() async{ 
@@ -99,45 +104,27 @@ class _UserPageState extends State<UserPage> {
   }
 
   Widget _buildUserPageBody(BuildContext context){
+    var _users = Provider.of<List<UserModel>>(context);
     return Container(
-      child: FutureBuilder<ProviderUsers>(
-        future: usersData.first,
-        builder: (context, projectSnap){
-          return ListView.builder(
-            itemCount: projectSnap.data.index,
-            // itemBuilder: (context, index) => ListTileUsers(users: listUsers[index].toString())
-            itemBuilder: (BuildContext context, int index){
-              return Card(
-                child: Column(
-                  children: <Widget>[
-                    Text("${usersData[index]}")
-                  ],
-                )
-              );
-            }
-          );
-          // return  Consumer<ProviderUsers>(
-          //   builder: (ctx, user, child){
-          //     final Future<List<UserModel>> listUsers = user.getAllUser(context);
-          //     // final Future<UserModel> detailUsers = user.fetchUsers(context);
-          //     // final Future<UserModel> listUsers = user.getAllUser(context).toString();
-          //     return ListView.builder(
-          //       itemCount: listUsers.toString().length,
-          //       // itemBuilder: (context, index) => ListTileUsers(users: listUsers[index].toString())
-          //       itemBuilder: (BuildContext context, int index){
-          //         return Card(
-          //           child: Column(
-          //             children: <Widget>[
-          //               Text("${usersData[index]}")
-          //             ],
-          //           )
-          //         );
-          //       }
-          //     );
-          //   }
-          // );
-        }
-      )
+      // child: FutureBuilder<ProviderUsers>(
+      //   future: usersData.first,
+      //   builder: (context, projectSnap){
+      //     return ListView.builder(
+      //       itemCount: projectSnap.data.index,
+      //       // itemBuilder: (context, index) => ListTileUsers(users: listUsers[index].toString())
+      //       itemBuilder: (BuildContext context, int index){
+      //         return Card(
+      //           child: Column(
+      //             children: <Widget>[
+      //               Text("${usersData[index]}")
+      //             ],
+      //           )
+      //         );
+      //       }
+      //     );
+          
+      //   }
+      // )
       // child: FutureBuilder(
       //   future: this.fetch(),
       //   builder: (BuildContext context, snap){
@@ -159,23 +146,24 @@ class _UserPageState extends State<UserPage> {
       //   }
 
       // )
-      // child: ListView.builder(
-      //   itemCount: usersData == null ? 0 : usersData.length,
-      //   itemBuilder: (BuildContext context, int index){
-      //     return Card(
-      //       child: Column(
-      //         children: <Widget>[
-      //           Text("${usersData[index]}"),
-      //           // Text("${usersData[index]["ID"]),
-      //           // Text("${usersData[index]["USER_NAME"]}"),
-      //           // Text("${usersData[index]["EMAIL"]}"),
-      //           // Text("${usersData[index]["IMAGE_URL"]}")
-      //         ]
-      //       )
-      //     );
-      //   }
-      //   // itemBuilder: (context, index) => ListTileUsers(users: usersData[index])
-      // )
+      child: ListView.builder(
+        // itemCount: usersData == null ? 0 : usersData.length,
+        itemCount: _users.length,
+        itemBuilder: (BuildContext context, int index){
+          return Card(
+            child: Column(
+              children: <Widget>[
+                Text("${_users[index].ID}"),
+                // Text("${usersData[index]["ID"]),
+                // Text("${usersData[index]["USER_NAME"]}"),
+                // Text("${usersData[index]["EMAIL"]}"),
+                // Text("${usersData[index]["IMAGE_URL"]}")
+              ]
+            )
+          );
+        }
+        // itemBuilder: (context, index) => ListTileUsers(users: usersData[index])
+      )
     );
     // return Container(
     //   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20 / 2),

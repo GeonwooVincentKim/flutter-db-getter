@@ -26,6 +26,16 @@ class ProviderUsers with ChangeNotifier{
     return _userList;
   }
 
+  Future<List<UserModel>> getAllUser() async {
+    final response = await http.get("http://192.168.88.204:3010/api/users");
+    return json.decode(response.body);
+  }
+
+  List<UserModel> parseUsers(String responseBody){
+    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<UserModel>((json) => UserModel.fromJson(json)).toList();
+  }
+
   Future<UserModel> fetchUser(BuildContext context) async {
     http.Response res = await http.get("http://192.168.88.204:3010/api/users/:id");
     return UserModel.fromJson(jsonDecode(res.body));
