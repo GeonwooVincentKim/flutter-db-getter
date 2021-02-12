@@ -150,7 +150,7 @@ class EventProvider {
  
 // UserProvider (Future)
 class UserProvider {
-  final String _dataPath = "http://localhost:3010/api/users";
+  final String _dataPath = "assets/data/users.json";
   List<User> users;
  
   Future<List<User>> loadUserData( ) async {
