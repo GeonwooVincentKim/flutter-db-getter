@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_db_test/data/future_builder/future_users.dart';
 import 'package:flutter_db_test/data/model/model_users.dart';
 import 'package:flutter_db_test/data/provider/provider_users.dart';
 import 'package:flutter_db_test/shared/style/divider.dart';
@@ -28,6 +29,7 @@ class _UserPageState extends State<UserPage> {
   // List<UserModel> userList = [];
   // List<UserModel> usersData = [];
   Future<UserModel> futureUsers;
+  List<UserModel> users;
   
 
   List<UserModel> parseUsers(String responseBody){
@@ -106,23 +108,45 @@ class _UserPageState extends State<UserPage> {
   Widget _buildUserPageBody(BuildContext context){
     var _users = Provider.of<List<UserModel>>(context);
     return Container(
-      // child: FutureBuilder<ProviderUsers>(
-      //   future: usersData.first,
+      child: Consumer<ProviderUsers>(
+        builder: (ctx, users, child){
+          final List<UserModel> listUsers = users.listUsers.toList();
+          // final List<ProviderUsers> listUsers = users._userList.toList();
+          return FutureBuilder<List<UserModel>>(
+            future: users.getAllUser(),
+            builder: (context, projectSnap){
+              return ListView.builder(
+                itemCount: users.listUsers.length,
+                itemBuilder: (context, index){
+                  print(users.data);
+                  return Text("${listUsers[index]}");
+                }
+              );
+            }
+          );
+        }
+      ),
+      // child: FutureBuilder<List<UserModel>>(
+      //   // future: usersData.first,
+      //   future: fetchUsers(),
       //   builder: (context, projectSnap){
-      //     return ListView.builder(
-      //       itemCount: projectSnap.data.index,
-      //       // itemBuilder: (context, index) => ListTileUsers(users: listUsers[index].toString())
-      //       itemBuilder: (BuildContext context, int index){
-      //         return Card(
-      //           child: Column(
-      //             children: <Widget>[
-      //               Text("${usersData[index]}")
-      //             ],
-      //           )
-      //         );
-      //       }
+      //     return Consumer<ProviderUsers>(
+      //       builder: 
       //     );
-          
+      //     // return ListView.builder(
+      //     //   // itemCount: projectSnap.data.index,
+      //     //   itemCount: users.length,
+      //     //   // itemBuilder: (context, index) => ListTileUsers(users: listUsers[index].toString())
+      //     //   itemBuilder: (BuildContext context, int index){
+      //     //     // return Card(
+      //     //     //   child: Column(
+      //     //     //     children: <Widget>[
+      //     //     //       Text("${users[index]}")
+      //     //     //     ],
+      //     //     //   )
+      //     //     // );
+      //     //   }
+      //     // );
       //   }
       // )
       // child: FutureBuilder(
@@ -146,24 +170,24 @@ class _UserPageState extends State<UserPage> {
       //   }
 
       // )
-      child: ListView.builder(
-        // itemCount: usersData == null ? 0 : usersData.length,
-        itemCount: _users.length,
-        itemBuilder: (BuildContext context, int index){
-          return Card(
-            child: Column(
-              children: <Widget>[
-                Text("${_users[index].ID}"),
-                // Text("${usersData[index]["ID"]),
-                // Text("${usersData[index]["USER_NAME"]}"),
-                // Text("${usersData[index]["EMAIL"]}"),
-                // Text("${usersData[index]["IMAGE_URL"]}")
-              ]
-            )
-          );
-        }
-        // itemBuilder: (context, index) => ListTileUsers(users: usersData[index])
-      )
+      // child: ListView.builder(
+      //   // itemCount: usersData == null ? 0 : usersData.length,
+      //   itemCount: _users.length,
+      //   itemBuilder: (BuildContext context, int index){
+      //     return Card(
+      //       child: Column(
+      //         children: <Widget>[
+      //           Text("${_users[index].ID}"),
+      //           // Text("${usersData[index]["ID"]),
+      //           // Text("${usersData[index]["USER_NAME"]}"),
+      //           // Text("${usersData[index]["EMAIL"]}"),
+      //           // Text("${usersData[index]["IMAGE_URL"]}")
+      //         ]
+      //       )
+      //     );
+      //   }
+      //   // itemBuilder: (context, index) => ListTileUsers(users: usersData[index])
+      // )
     );
     // return Container(
     //   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20 / 2),

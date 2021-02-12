@@ -27,7 +27,8 @@ class ProviderUsers with ChangeNotifier{
   // }
 
   Future<List<UserModel>> getAllUser() async {
-    final response = await http.get("http://192.168.88.204:3010/api/users");
+    // final response = await http.get("http://192.168.88.204:3010/api/users");
+    final response = await http.get("http://localhost:3010/api/users");
     return json.decode(response.body);
   }
 
