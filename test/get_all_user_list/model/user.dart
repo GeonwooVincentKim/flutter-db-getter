@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+
+import 'package:flutter/material.dart';
+
 class UserModel{
   final int ID;
   final String USER_NAME;
@@ -44,4 +47,12 @@ class UserModel{
       ADDRESS: ''
     );
   }
+}
+
+class UserList{
+  final List<UserModel> userList;
+  UserList({@required this.userList});
+
+  UserList.fromJson(List<dynamic> usersJson) :
+    userList = usersJson.map((user) => UserModel.fromJson(user)).toList();
 }
