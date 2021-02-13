@@ -11,8 +11,14 @@ import '../model/user.dart';
 
 class UserProvider with ChangeNotifier{
   final String _dataPath = "http://127.0.0.1:3010/api/users";
-  List<UserModel> users= [];
+  List<UserModel> users = [];
   List<UserModel> get get_users => users; 
+  // Future<List<UserModel>> getList() async{
+  //   List _result = await http.get("http://192.168.219.105:3010/api/users");
+  //   _result.forEach((_item){
+  //     addToList()
+  //   });
+  // }
 
   // Future<List<UserModel>> fetchUsers() async {
   //   final response =
@@ -48,6 +54,21 @@ class UserProvider with ChangeNotifier{
     return await Future.delayed(Duration(seconds: 10), () async {
       return await rootBundle.loadString(_dataPath);
     });
+  }
+
+  Future<List<UserModel>> fetchPhotos(http.Client client) async {
+    final response =
+        await client.get('https://jsonplaceholder.typicode.com/photos');
+
+    // Use the compute function to run parsePhotos in a separate isolate.
+    return compute(parsePhotos, response.body);
+  }
+
+  // A function that converts a response body into a List<Photo>.
+  List<UserModel> parsePhotos(String responseBody) {
+    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+    return parsed.map<UserModel>((json) => UserModel.fromJson(json)).toList();
   }
 
   // Future<List<UserModel>> fetchUserList() async {
