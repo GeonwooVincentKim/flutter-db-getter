@@ -8,7 +8,7 @@ import 'package:flutter_db_test/data/model/model_users.dart';
 
 Future<List<UserModel>> fetchUsers(context) async {
   final response = 
-    await http.get('http://192.168.88.204:3010/api/users');
+    await http.get('http://192.168.219.104:3010/api/users');
   return json.decode(response.body);
 }
 
@@ -17,3 +17,6 @@ List<UserModel> parseUsers(String resBody){
   return parsed.map<UserModel>((json) => UserModel.fromJson(json)).toList();
 }
 
+class FutureUser{
+
+}

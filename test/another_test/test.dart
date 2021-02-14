@@ -8,15 +8,17 @@ import 'package:http/http.dart' as http;
 Future<List<UserModel>> fetchPhotos(http.Client client) async {
   final response =
       // await client.get('https://jsonplaceholder.typicode.com/photos');
-      await client.get("http://192.168.219.105:3010/api/users");
+      await client.get("http://192.168.219.104:3011/api/users");
   // Use the compute function to run parsePhotos in a separate isolate.
+  debugPrint(response.body);
+  // return json.decode(response.body);
   return compute(parsePhotos, response.body);
 }
 
 // A function that converts a response body into a List<Photo>.
 List<UserModel> parsePhotos(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
+  debugPrint(parsed);
   return parsed.map<UserModel>((json) => UserModel.fromJson(json)).toList();
 }
 
@@ -93,6 +95,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: FutureBuilder<List<UserModel>>(
         future: fetchPhotos(http.Client()),
+        // future: fetchPhotos(),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
 

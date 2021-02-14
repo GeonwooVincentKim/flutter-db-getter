@@ -40,7 +40,7 @@ class _UserPageState extends State<UserPage> {
   Future fetch() async{ 
     // var res = await http.get("http://192.168.88.204:3010/api/users");
     var res = await http.get(
-      "http://192.168.88.204:3010/api/users"
+      "http://192.168.219.104:3010/api/users"
     );
     return json.decode(res.body);
   }
@@ -50,7 +50,7 @@ class _UserPageState extends State<UserPage> {
 
   getUsers() async {
     // http.Response response = await http.get("http://localhost:3010/api/users");
-    http.Response response = await http.get("http://192.168.88.204:3010/api/users");
+    http.Response response = await http.get("http://192.168.219.104:3010/api/users");
     debugPrint(response.body);
     data = json.decode(response.body);
     // userTest = UserModel.fromJson(json.decode(response.body));
@@ -62,7 +62,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   getUsersByID() async {
-    http.Response response = await http.get("http://192.168.88.204:3010/api/users/:id");
+    http.Response response = await http.get("http://192.168.219.104:3010/api/users/:id");
     debugPrint(response.body);
     data = json.decode(response.body);
     setState(() {
