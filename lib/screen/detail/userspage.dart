@@ -37,20 +37,22 @@ class _UserPageState extends State<UserPage> {
     return json.decode(res.body);
   }
   // List<UserModel> usersData = [];
+  // List usersData;
   List usersData;
-  Map data;
+  Map<String, dynamic> data;
   UserModel userTest;
 
   getUsers() async {
-    // http.Response response = await http.get("http://localhost:3010/api/users");
-    http.Response response = await http.get("http://192.168.219.105:3010/api/users");
+    // http5.Response response = await http.get("http://localhost:3010/api/users");
+    http.Response response = await http.get("http://192.168.219.104:3010/api/users");
     debugPrint(response.body);
     // data = json.decode(response.body);
-    data = json.decode(response.body);
+     data = json.decode(response.body);
     
     // userTest = UserModel.fromJson(json.decode(response.body));
     // UserModel.fromJson(json.decode(response.body));
     setState(() {
+      // usersData = data['key'];
       // usersData = data['key'];
       usersData = data['key'];
     });
@@ -112,11 +114,12 @@ class _UserPageState extends State<UserPage> {
             return Card(
               child: Column(
                 children: <Widget>[
+                  Text("${usersData[index]["ID"]}")
                   // Text("${usersData[index]}"),
-                  Text("${usersData[index]["ID"]}"),
-                  Text("${usersData[index]["USER_NAME"]}"),
-                  Text("${usersData[index]["EMAIL"]}"),
-                  Text("${usersData[index]["IMAGE_URL"]}")
+                  // Text("${usersData[index]["ID"]}"),
+                  // Text("${usersData[index]["USER_NAME"]}"),
+                  // Text("${usersData[index]["EMAIL"]}"),
+                  // Text("${usersData[index]["IMAGE_URL"]}")
                 ]
               )
             );
