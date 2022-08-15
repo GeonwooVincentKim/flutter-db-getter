@@ -10,55 +10,54 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   String title;
   int _selectPageNum = 0;
-  
-  PageController pageController = PageController(
-    initialPage: 0,
-    keepPage: true
-  );
 
-  Widget _buildBody(){
+  PageController pageController =
+      PageController(initialPage: 0, keepPage: true);
+
+  Widget _buildBody() {
     return PageView(
-      controller: pageController,
-      physics: ClampingScrollPhysics(),
-      children: <Widget>[
-        HomePage(pageIndex: _selectPageNum, title: "First Page", pageInfo: _bodyNaviBar),
-        UserPage(pageIndex: _selectPageNum, title: "Second Page", pageInfo: _bodyNaviBar),
-      ], onPageChanged: (page) => setState(()=>{_selectPageNum = page })
-    );
+        controller: pageController,
+        physics: ClampingScrollPhysics(),
+        children: <Widget>[
+          HomePage(
+              pageIndex: _selectPageNum,
+              title: "First Page",
+              pageInfo: _bodyNaviBar),
+          UserPage(
+              pageIndex: _selectPageNum,
+              title: "Second Page",
+              pageInfo: _bodyNaviBar),
+        ],
+        onPageChanged: (page) => setState(() => {_selectPageNum = page}));
   }
 
-  List<BottomNavigationBarItem> _bodyNaviBarItem(){
+  List<BottomNavigationBarItem> _bodyNaviBarItem() {
     return [
+      BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
       BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        title: Text("Home")
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.verified_user),
-        title: Text("User Test")
-      )
+          icon: Icon(Icons.verified_user), label: "User Test")
     ];
   }
 
-  Widget _bodyNaviBar(BuildContext context){
+  Widget _bodyNaviBar(BuildContext context) {
     return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      onTap: (index) => tapBottom(index),
-      currentIndex: _selectPageNum,
-      items: _bodyNaviBarItem(),
-      iconSize: 45,
-      selectedItemColor: Colors.black,
-      backgroundColor: Colors.amber
-    );
+        type: BottomNavigationBarType.fixed,
+        onTap: (index) => tapBottom(index),
+        currentIndex: _selectPageNum,
+        items: _bodyNaviBarItem(),
+        iconSize: 45,
+        selectedItemColor: Colors.black,
+        backgroundColor: Colors.amber);
   }
 
-  void tapBottom(int index){
+  void tapBottom(int index) {
     setState(() {
       _selectPageNum = index;
-      pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
+      pageController.animateToPage(index,
+          duration: Duration(milliseconds: 500), curve: Curves.ease);
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

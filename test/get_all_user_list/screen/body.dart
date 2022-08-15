@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'users.dart';
 
-
 class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
@@ -13,38 +12,39 @@ class _BodyState extends State<Body> {
   String title;
   int pageIndex = 0;
   List<Widget> controller = List<Widget>();
-  PageController pageController = PageController(
-    initialPage: 0,
-    keepPage: true
-  );
+  PageController pageController =
+      PageController(initialPage: 0, keepPage: true);
 
-  Widget _buildBody(){
+  Widget _buildBody() {
     return PageView(
       controller: pageController,
       physics: ClampingScrollPhysics(),
       children: <Widget>[
         MyHome(pageIndex: pageIndex, title: "Home", pageInfo: _bodyNaviBar),
         MyUser(pageIndex: pageIndex, title: "User", pageInfo: _bodyNaviBar),
-      ], onPageChanged: (page) => setState((){pageIndex = page;}),
+      ],
+      onPageChanged: (page) => setState(() {
+        pageIndex = page;
+      }),
     );
   }
 
-  List<BottomNavigationBarItem> _bodyNaviBarItem(){
+  List<BottomNavigationBarItem> _bodyNaviBarItem() {
     return [
       BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        // ignore: deprecated_member_use
-        title: Text("Home")
-      ),
+          icon: Icon(Icons.home),
+          // ignore: deprecated_member_use
+          // title: Text("Home")
+          label: "Home"),
       BottomNavigationBarItem(
-        icon: Icon(Icons.verified_user),
-        // ignore: deprecated_member_use
-        title: Text("User")
-      )
+          icon: Icon(Icons.verified_user),
+          // ignore: deprecated_member_use
+          // title: Text("User")
+          label: "User")
     ];
   }
 
-  Widget _bodyNaviBar(BuildContext context){
+  Widget _bodyNaviBar(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       onTap: (tap) => tapBottom(tap),
@@ -56,10 +56,11 @@ class _BodyState extends State<Body> {
     );
   }
 
-  void tapBottom(int index){
+  void tapBottom(int index) {
     setState(() {
       pageIndex = index;
-      pageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
+      pageController.animateToPage(index,
+          duration: Duration(milliseconds: 500), curve: Curves.ease);
     });
   }
 
