@@ -46,11 +46,9 @@
 //         ),
 //       ),
 //     );
-    
+
 //   }
 // }
-
-
 
 // class ProviderMyModel with ChangeNotifier{
 //   String someValue = 'Hello';
@@ -79,7 +77,8 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureProvider<MyModel>( //                      <--- FutureProvider
+    return FutureProvider<MyModel>(
+      //                      <--- FutureProvider
       initialData: MyModel(someValue: 'default value'),
       create: (context) => someAsyncFunctionToGetMyModel(),
       child: MaterialApp(
@@ -88,47 +87,46 @@ class MyApp extends StatelessWidget {
           body: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-
               Container(
-                padding: const EdgeInsets.all(20),
-                color: Colors.green[200],
-                child: Consumer<MyModel>( //                    <--- Consumer
-                  builder: (context, myModel, child) {
-                    return RaisedButton(
-                      child: Text('Do something'),
-                      onPressed: (){
-                        myModel.doSomething();
-                      },
-                    );
-                  },
-                )
-              ),
-
+                  padding: const EdgeInsets.all(20),
+                  color: Colors.green[200],
+                  child: Consumer<MyModel>(
+                    //                    <--- Consumer
+                    builder: (context, myModel, child) {
+                      return ElevatedButton(
+                        child: Text('Do something'),
+                        onPressed: () {
+                          myModel.doSomething();
+                        },
+                      );
+                    },
+                  )),
               Container(
                 padding: const EdgeInsets.all(35),
                 color: Colors.blue[200],
-                child: Consumer<MyModel>( //                    <--- Consumer
+                child: Consumer<MyModel>(
+                  //                    <--- Consumer
                   builder: (context, myModel, child) {
                     return Text(myModel.someValue);
                   },
                 ),
               ),
-
             ],
           ),
         ),
       ),
     );
-    
   }
 }
 
-Future<MyModel> someAsyncFunctionToGetMyModel() async { //  <--- async function
+Future<MyModel> someAsyncFunctionToGetMyModel() async {
+  //  <--- async function
   await Future.delayed(Duration(seconds: 3));
   return MyModel(someValue: 'new data');
 }
 
-class MyModel { //                                               <--- MyModel
+class MyModel {
+  //                                               <--- MyModel
   MyModel({this.someValue});
   String someValue = 'Hello';
   Future<void> doSomething() async {
